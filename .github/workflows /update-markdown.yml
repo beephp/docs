@@ -3,7 +3,7 @@ name: Update Markdown and Generate
 on:
   push:
     branches:
-      - site
+      - master
 
 jobs:
   update_markdown:
