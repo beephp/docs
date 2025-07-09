@@ -38,6 +38,9 @@ jobs:
       - name: Move Markdown files to docs-generator
         run: |
           mv markdown_temp/*.md docs-generator/markdown/
+          
+      - name: Run PHP generator script
+        run: |
           cd docs-generator
           php generator.php
 
