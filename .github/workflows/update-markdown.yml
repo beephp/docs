@@ -42,11 +42,15 @@ jobs:
       - name: Run PHP generator script
         run: |
           cd docs-generator
-          php generate.php
+          php generator.php
 
-      - name: Push output files to site branch
+      - name: Update index.html in site branch
         run: |
-          cd docs-generator
-          git add output/*
-          git commit -m "Add generated output files"
+          # Copy the new index.html from output to the root of the site branch
+          cp docs-generator/output/index.html .
+          
+      - name: Commit and push changes to site branch
+        run: |
+          git add index.html
+          git commit -m "Update index.html with the latest generated version"
           git push origin site
