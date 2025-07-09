@@ -49,6 +49,11 @@ jobs:
           # Copy the new index.html from output to the root of the site branch
           cp docs-generator/output/index.html .
           
+      - name: Configure Git user
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+
       - name: Commit and push changes to site branch
         run: |
           git add index.html
