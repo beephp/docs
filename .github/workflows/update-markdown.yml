@@ -31,6 +31,10 @@ jobs:
           cd docs-generator
           composer install
 
+      - name: Create markdown directory in docs-generator
+        run: |
+          mkdir -p docs-generator/markdown
+
       - name: Move Markdown files to docs-generator
         run: |
           mv markdown_temp/*.md docs-generator/markdown/
