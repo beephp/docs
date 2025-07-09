@@ -3,7 +3,7 @@ name: Update Markdown and Generate
 on:
   push:
     branches:
-      - master
+      - site
 
 jobs:
   update_markdown:
@@ -55,7 +55,10 @@ jobs:
           git config --global user.name "GitHub Action"
 
       - name: Commit and push changes to site branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}  # Use the personal access token
         run: |
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/beephp/docs.git
           git add index.html
           git commit -m "Update index.html with the latest generated version"
           git push origin site
