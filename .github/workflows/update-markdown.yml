@@ -1,0 +1,45 @@
+name: Update Markdown and Generate
+
+on:
+  push:
+    branches:
+      - site
+
+jobs:
+  update_markdown:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Fetch all branches
+
+      - name: Copy Markdown files from master
+        run: |
+          # Create a temporary directory for markdown files
+          mkdir -p markdown_temp
+          # Checkout master branch and copy all .md files
+          git checkout master
+          cp *.md markdown_temp/
+          # Switch back to the site branch
+          git checkout site
+
+      - name: Clone docs-generator repository
+        run: |
+          git clone https://github.com/LotousOrganization/docs-generator.git
+          cd docs-generator
+          composer install
+
+      - name: Move Markdown files to docs-generator
+        run: |
+          mv markdown_temp/*.md docs-generator/markdown/
+          cd docs-generator
+          php generator.php
+
+      - name: Push output files to site branch
+        run: |
+          cd docs-generator
+          git add output/*
+          git commit -m "Add generated output files"
+          git push origin site
