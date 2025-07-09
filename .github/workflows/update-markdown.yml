@@ -42,7 +42,7 @@ jobs:
       - name: Run PHP generator script
         run: |
           cd docs-generator
-          php generator.php
+          php generate.php
 
       - name: Push output files to site branch
         run: |
